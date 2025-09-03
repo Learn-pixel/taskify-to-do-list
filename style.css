@@ -1,0 +1,295 @@
+/* Import Pixel Font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Cyberpunk (default/dark) */
+:root {
+  --bg-color: linear-gradient(180deg, #0a0f1e 0%, #1a1f3a 100%);
+  --text-color: #e0e0ff;
+  --accent: #00f5ff;
+  --danger: #ff3b6a;
+  --success: #3bff88;
+  --soft-panel: rgba(255, 255, 255, 0.06);
+  --soft-border: rgba(0, 245, 255, 0.5);
+}
+
+/* Retro pastel (light) */
+.light-theme {
+  --bg-color: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+  --text-color: #222;
+  --accent: #ff4081;
+  --danger: #ff1744;
+  --success: #76ff03;
+  --soft-panel: rgba(0,0,0,0.04);
+  --soft-border: rgba(255, 64, 129, 0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  background: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  transition: background 0.6s ease, color 0.3s ease;
+}
+
+/* Header */
+header { display: flex; justify-content: space-between; align-items: center; }
+header h1 { font-size: 18px; color: var(--accent); text-shadow: 0 0 8px var(--accent); }
+#theme-toggle {
+  background: none; border: 2px solid var(--accent); color: var(--accent);
+  font-size: 14px; padding: 6px 10px; cursor: pointer; border-radius: 10px;
+  transition: all 0.2s ease-in;
+}
+#theme-toggle:hover { background: var(--accent); color: #0a0f1e; }
+
+/* Add Task Section */
+.task-input { display: flex; gap: 10px; flex-wrap: wrap; }
+.task-input input, .task-input select {
+  flex: 1; padding: 10px; font-size: 12px; border: 2px solid var(--accent);
+  background: transparent; color: var(--text-color); border-radius: 8px;
+}
+#add-task {
+  background: var(--accent); color: #0a0f1e; font-size: 12px; border: none;
+  padding: 10px 14px; cursor: pointer; border-radius: 8px; transition: transform 0.2s;
+  box-shadow: 0 0 10px var(--accent);
+}
+#add-task:hover { transform: scale(1.06); }
+
+/* Controls: search + filters */
+.controls { display: grid; gap: 10px; margin-top: 10px; }
+.controls #search {
+  padding: 10px; font-size: 12px; border: 2px solid var(--accent);
+  background: transparent; color: var(--text-color); border-radius: 8px;
+}
+.filters { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+.status-filters { display: flex; gap: 8px; }
+.filter-btn {
+  border: 2px solid var(--accent); background: var(--soft-panel); color: var(--text-color);
+  padding: 8px 10px; font-size: 10px; border-radius: 999px; cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.filter-btn:hover { transform: translateY(-1px); box-shadow: 0 0 10px var(--accent); }
+.filter-btn.active { background: var(--accent); color: #0a0f1e; }
+#filter-category {
+  border: 2px solid var(--accent); background: transparent; color: var(--text-color);
+  padding: 8px 12px; font-size: 10px; border-radius: 8px;
+}
+
+/* Task List */
+.task-list ul { list-style: none; margin-top: 10px; }
+.task-list li {
+  background: var(--soft-panel);
+  border: 2px solid var(--soft-border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  animation: slideIn 320ms ease both;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.task-list li.completed {
+  border-color: var(--success);
+  opacity: 0.85;
+}
+.task-content {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.badge {
+  font-size: 10px; padding: 4px 8px; border-radius: 999px;
+  border: 1px solid var(--accent);
+}
+.badge.work { border-color: #4fc3f7; }
+.badge.study { border-color: #81c784; }
+.badge.personal { border-color: #f48fb1; }
+.badge.general { border-color: var(--accent); }
+
+.task-text { font-size: 12px; }
+.task-text.completed { text-decoration: line-through; opacity: 0.75; }
+
+.task-actions button {
+  margin-left: 6px; padding: 6px 8px; font-size: 10px; border: none;
+  cursor: pointer; border-radius: 6px;
+}
+.task-actions .toggle { background: var(--success); color: #0a0f1e; }
+.task-actions .edit { background: var(--accent); color: #0a0f1e; }
+.task-actions .delete { background: var(--danger); color: white; }
+
+/* Footer */
+footer { margin-top: 8px; }
+#task-count { font-size: 12px; margin-bottom: 8px; }
+.progress-container {
+  width: 100%; height: 12px; background: rgba(255,255,255,0.1);
+  border: 2px solid var(--accent); border-radius: 8px; overflow: hidden;
+}
+#progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--success), var(--accent));
+  transition: width 0.3s ease;
+}
+
+/* --- NEW: Priority badges --- */
+.priority {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+.priority.low {
+  background-color: #6ee7b7; /* green */
+  color: #065f46;
+}
+.priority.medium {
+  background-color: #fde68a; /* yellow */
+  color: #92400e;
+}
+.priority.high {
+  background-color: #fca5a5; /* red */
+  color: #7f1d1d;
+}
+
+/* --- NEW: Due dates --- */
+.due-date {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-left: 0.5rem;
+  opacity: 0.8;
+}
+
+/* --- NEW: Overdue tasks --- */
+.task-list li.overdue {
+  border-color: var(--danger);
+  animation: pulse 1.2s infinite alternate;
+}
+@keyframes pulse {
+  from { box-shadow: 0 0 4px var(--danger); }
+  to   { box-shadow: 0 0 16px var(--danger); }
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .task-input { flex-direction: column; }
+  .filters { flex-direction: column; align-items: stretch; gap: 8px; }
+}
+
+
+
+
+/* ===== Celebration visuals: confetti + animal popup ===== */
+
+/* Confetti pieces */
+.confetti {
+  position: fixed;
+  top: 8vh;                /* start a little below the top so it's visible */
+  pointer-events: none;    /* don't block clicks */
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0.95;
+  z-index: 9999;
+  transform-origin: center;
+  animation-name: confetti-fall;
+  animation-timing-function: cubic-bezier(.2,.8,.2,1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Cute animal / emoji popup */
+.popup-animal {
+  position: fixed;
+  bottom: 18vh;
+  pointer-events: none;
+  font-size: 2.2rem;
+  z-index: 10000;
+  opacity: 1;
+  animation: popup-rise 1400ms ease-out forwards;
+  text-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+@keyframes popup-rise {
+  0%   { transform: translateY(0) scale(0.9); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translateY(-140px) scale(1.15); opacity: 0; }
+}
+
+/* small mobile tweak so things don't overflow too much */
+@media (max-width: 420px) {
+  .popup-animal { font-size: 1.6rem; bottom: 16vh; }
+}
+
+.game-stats {
+  margin-bottom: 20px;
+  padding: 10px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+
+
+.task-input select,
+#filter-category {
+  background: rgba(8,12,22,0.85);   /* dark panel behind dropdown (desktop) */
+  color: var(--text-color);
+  border: 2px solid var(--accent);
+  z-index: 9999;                    /* keep it above other elements */
+  appearance: none;                 /* nicer neutral look */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Option items - many browsers accept this */
+.task-input select option,
+#filter-category option {
+  background: rgba(10,15,30,0.98);
+  color: var(--text-color);
+}
+
+/* Light theme overrides */
+.light-theme .task-input select,
+.light-theme #filter-category {
+  background: rgba(255,255,255,0.98);
+  color: #111;
+  border-color: var(--accent);
+}
+
+.light-theme .task-input select option,
+.light-theme #filter-category option {
+  background: #ffffff;
+  color: #111;
+}
+
+/* Small tweak to show the dropdown arrow with contrast */
+.task-input select {
+  padding-right: 28px; /* leave space for the native arrow */
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+                    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position: calc(100% - 12px) calc(1em + 2px), calc(100% - 8px) calc(1em + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}

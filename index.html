@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Taskify - To-Do App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Taskify </h1>
+    <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <div class="stats">
+        <p>EXP: <span id="exp">0</span></p>
+        <p>Badge: <span id="badge">👶 Newbie</span></p>
+    </div>
+
+    <!-- Add Task Form -->
+    <section class="task-input">
+      <input type="text" id="task-text" placeholder="Enter a new task...">
+      <select id="task-category">
+        <option value="general">General</option>
+        <option value="work">Work</option>
+        <option value="study">Study</option>
+        <option value="personal">Personal</option>
+      </select>
+      <button id="add-task">➕ Add</button>
+    </section>
+
+    <!-- Controls: search + filters -->
+    <section class="controls">
+      <input type="text" id="search" placeholder="Search tasks..." aria-label="Search tasks">
+      <div class="filters">
+        <div class="status-filters">
+          <button class="filter-btn active" data-status="all">All</button>
+          <button class="filter-btn" data-status="active">Active</button>
+          <button class="filter-btn" data-status="completed">Completed</button>
+        </div>
+        <select id="filter-category" aria-label="Filter by category">
+          <option value="all">All Categories</option>
+          <option value="general">General</option>
+          <option value="work">Work</option>
+          <option value="study">Study</option>
+          <option value="personal">Personal</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Task List -->
+    <section class="task-list">
+      <ul id="tasks"></ul>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p id="task-count">0 tasks total</p>
+    <div class="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
